@@ -5,11 +5,11 @@ This script will scan a directory tree looking for duplicate files, it uses a tw
 An example of running this script to just list all the duplicate files would be:
 
 ```
-python DuplicateFiles.py -root /Users/Daniel/Documents
+python3 DuplicateFiles.py -root /Users/Daniel/Documents
 ```
 
 An example of running this script to list and delete all the duplicate files would be:
 
 ```
-python DuplicateFiles.py -root /Users/Daniel/Documents -remove
+python3 DuplicateFiles.py -root /Users/Daniel/Documents -remove
 ```

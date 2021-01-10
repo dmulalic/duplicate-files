@@ -11,20 +11,20 @@ class  duplicates_gui(Frame):
     def  __init__(self,  master=None):
         Frame.__init__(self,  master)
         self.grid(sticky=N+S+E+W)
-	self._duplicates=[]
+        self._duplicates=[]
         self.createWidgets()
         self.setStartState()
-	self._root=''
+        self._root=''
         self._time_duration = time;
 
     def setroot(self, dirname):
-	self.path.set(dirname)
+        self.path.set(dirname)
         
     def setStartState(self):
         del self._duplicates[:]
         self._duplicate_index =0
         self._finished_scan = [0] #needs to be a list instead of Boolean, cause it is used as a reference in the threads
-	self.update_output()
+        self.update_output()
        
     def  createWidgets(self):
         #Stretching
@@ -52,7 +52,7 @@ class  duplicates_gui(Frame):
 
         self._result_total_var = StringVar()
         self._result_total_var.set('Select directory, scan it, step through results and delete duplicate files!')
-        self.result_total_label = Label ( self, anchor=CENTER, textvariable=self._result_total_var)
+        self.result_total_label = Label (self, anchor=CENTER, textvariable=self._result_total_var)
         self.result_total_label.grid(row=2,column=0, columnspan=3, padx=5)
 
         self._result_current_label = StringVar()
@@ -83,13 +83,13 @@ class  duplicates_gui(Frame):
 
 
     def start_scan(self):
- 	if os.path.exists(self.path.get()):
-	        _path = self.path.get()
-	else:
-		self._result_total_var.set('Choose valid path!')
-		return
+        if os.path.exists(self.path.get()):
+            _path = self.path.get()
+        else:
+        self._result_total_var.set('Choose valid path!')
+        return
         self._result_total_var.set('Scanning directories...please wait.')
-	self.setStartState()
+        self.setStartState()
         _queue = Queue.Queue()
         self._time_duration = time.time()
 
@@ -115,9 +115,9 @@ class  duplicates_gui(Frame):
     def update_output(self):
         self.scan_output.delete(0,self.scan_output.size())
         if len(self._duplicates)==0: 
-	    if self._finished_scan[0]==1:
-	        self._result_total_var.set("Finished scanning!".format(len(self._duplicates)))
-	        self._result_current_label.set("No duplicates found!".format(self._duplicate_index+1,len(self._duplicates)))
+        if self._finished_scan[0]==1:
+            self._result_total_var.set("Finished scanning!".format(len(self._duplicates)))
+            self._result_current_label.set("No duplicates found!".format(self._duplicate_index+1,len(self._duplicates)))
             return
         if self._duplicate_index < 0:
             self._duplicate_index = 0
@@ -126,7 +126,7 @@ class  duplicates_gui(Frame):
         for item in self._duplicates[self._duplicate_index]:
             self.scan_output.insert(END,item)
         self._result_total_var.set("The directory contains {0} file(s) which seem to exist twice or more!".format(len(self._duplicates)))
-	self._result_current_label.set("Showing: {0} of {1}".format(self._duplicate_index+1,len(self._duplicates)))
+    self._result_current_label.set("Showing: {0} of {1}".format(self._duplicate_index+1,len(self._duplicates)))
 
     def next_duplicate(self):
         self._duplicate_index +=1
@@ -137,14 +137,14 @@ class  duplicates_gui(Frame):
         self.update_output()
 
     def open_browse_dialog(self):
-	self.setStartState()
+    self.setStartState()
         dirname = askdirectory(initialdir="/")
-	self.path.set(dirname)
+    self.path.set(dirname)
         self._result_total_var.set('Scan directory for duplicates!')
         self._result_current_label.set('No results yet!')
 
 
 if __name__ == '__main__':
-	app  =  deletion_gui()
-	app.master.title("DuplicatesDeletion")
-	app.mainloop()
+    app  =  deletion_gui()
+    app.master.title("DuplicatesDeletion")
+    app.mainloop()
